@@ -1,0 +1,64 @@
+#ifndef EVENTDISPATCHER_H_
+# define EVENTDISPATCHER_H_
+
+#include "Event.h"
+
+namespace BoxAPI
+{
+	namespace Event
+	{
+		class EventDispatcher
+		{
+		public:
+			~EventDispatcher();
+
+			static EventDispatcher&	Instance();
+
+			void					start();
+			void					stop();
+
+			void					addSubscriber(DeviceSubscriber &sub);
+			void					addSubscriber(DeviceSubscriber &sub, DeviceEventType type);
+			void					addSubscriber(DeviceSubscriber &sub, DeviceEventType type, std::shared_ptr<Device> Device);
+
+			void					addSubscriber(CommandSubscriber &sub);
+			void					addSubscriber(CommandSubscriber &sub, CommandEventType type);
+			void					addSubscriber(CommandSubscriber &sub, CommandEventType type, std::shared_ptr<ICommand> Command);
+
+			void					dispatchEvent(DeviceEventData&);
+			void					dispatchEvent(CommandEventData&);
+
+		private:
+			EventDispatcher();
+			EventDispatcher& operator=(const EventDispatcher&);
+			EventDispatcher(const EventDispatcher&);
+
+			std::thread				_processDeviceThread;
+			void					processDevice();
+
+			std::thread				_processCommandThread;
+			void					processCommand();
+
+			static EventDispatcher								m_instance;
+
+			std::multimap<std::pair<DeviceEventType, std::shared_ptr<Device>>, DeviceSubscriber>	_deviceSubsribers;
+			std::queue<DeviceEventData>													_deviceEvents;
+
+			std::multimap<std::pair<CommandEventType, std::shared_ptr<ICommand>>, CommandSubscriber>	_commandSubsribers;
+			std::queue<CommandEventData>												_commandEvents;
+
+			bool					_started;
+			bool					_destructed;
+
+			std::mutex				_deviceeventmutex;
+			std::mutex				_devicesubmutex;
+			std::condition_variable	_deviceeventcv;
+
+			std::mutex				_commandeventmutex;
+			std::mutex				_commandsubmutex;
+			std::condition_variable	_commandeventcv;
+		};
+	}
+}
+
+#endif /* ENVENTDISPATCHER_H_ */

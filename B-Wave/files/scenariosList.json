@@ -1,0 +1,73 @@
+{
+   "List of actions" : [
+      {
+         "DeviceID" : 41,
+         "InstanceID" : 0,
+         "Name" : "Prise",
+         "SensorID" : 0,
+         "TypeID" : 37,
+         "TypeName" : "Switch",
+         "UniqueID" : 410037
+      },
+      {
+         "DeviceID" : 19,
+         "InstanceID" : 0,
+         "Name" : "Lampe RGB",
+         "SensorID" : 0,
+         "TypeID" : 38,
+         "TypeName" : "ZSwitchMultiLevel",
+         "UniqueID" : 190038
+      }
+   ],
+   "List of scenarios" : {
+      "Scenario 1: detection" : {
+         "Actions" : [ 410037 ],
+         "Conditions" : [
+            {
+               "Symbol" : [ 33, 33, 61 ],
+               "TriggerID" : 210148,
+               "Value" : [ 0, 0, true ]
+            }
+         ],
+         "Expression" : "210148"
+      },
+      "Scenario 2: detection + mouvement" : {
+         "Actions" : [ 190038 ],
+         "Conditions" : [
+            {
+               "Symbol" : [ 33, 33, 61 ],
+               "TriggerID" : 230148,
+               "Value" : [ 0, 0, true ]
+            },
+            {
+               "Symbol" : [ 33, 33, 61 ],
+               "TriggerID" : 0,
+               "Value" : [ 0, 0, true ]
+            }
+         ],
+         "Expression" : "210148&230148"
+      }
+   },
+   "List of triggers" : [
+      {
+         "DeviceID" : 21,
+         "InstanceID" : 0,
+         "Name" : "Capteur porte",
+         "SensorID" : 1,
+         "TypeID" : 48,
+         "TypeName" : "SensorBinary",
+         "UniqueID" : 210148
+      },
+      {
+         "DeviceID" : 23,
+         "InstanceID" : 0,
+         "Name" : "Motion Sensor",
+         "SensorID" : 1,
+         "TypeID" : 48,
+         "TypeName" : "SensorBinary",
+         "UniqueID" : 230148
+      }
+   ],
+   "Summary of scenario name" : [ "Scenario 1: detection", "Scenario 2: detection + mouvement" ]
+}
+

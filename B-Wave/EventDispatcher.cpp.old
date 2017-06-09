@@ -1,0 +1,161 @@
+#include "stdafx.h"
+#include "Device.h"
+#include "EventDispatcher.h"
+
+BoxAPI::Event::EventDispatcher BoxAPI::Event::EventDispatcher::m_instance = BoxAPI::Event::EventDispatcher();
+
+BoxAPI::Event::EventDispatcher::~EventDispatcher()
+{
+	_started = false;
+	_destructed = true;
+	_commandeventcv.notify_one();
+	_deviceeventcv.notify_one();
+
+	_processCommandThread.join();
+	_processDeviceThread.join();
+
+	_commandSubsribers.clear();
+	_deviceSubsribers.clear();
+}
+
+BoxAPI::Event::EventDispatcher::EventDispatcher()
+	: _started(false), _destructed(false), _processDeviceThread(std::bind(&BoxAPI::Event::EventDispatcher::processDevice, this)), _processCommandThread(std::bind(&BoxAPI::Event::EventDispatcher::processCommand, this))
+{
+
+}
+
+BoxAPI::Event::EventDispatcher::EventDispatcher(const EventDispatcher &)
+{
+}
+
+BoxAPI::Event::EventDispatcher &BoxAPI::Event::EventDispatcher::operator=(const EventDispatcher &)
+{
+
+}
+
+BoxAPI::Event::EventDispatcher & BoxAPI::Event::EventDispatcher::Instance()
+{
+	return (BoxAPI::Event::EventDispatcher::m_instance);
+}
+
+void BoxAPI::Event::EventDispatcher::start()
+{
+	_started = true;
+	_commandeventcv.notify_one();
+	_deviceeventcv.notify_one();
+}
+
+void BoxAPI::Event::EventDispatcher::stop()
+{
+	_started = false;
+}
+
+void BoxAPI::Event::EventDispatcher::addSubscriber(DeviceSubscriber & sub)
+{
+	std::unique_lock<std::mutex>	lock(_devicesubmutex);
+
+	this->_deviceSubsribers.insert(std::make_pair(std::make_pair(AllDeviceEvent, nullptr), sub));
+}
+
+void BoxAPI::Event::EventDispatcher::addSubscriber(DeviceSubscriber &sub, DeviceEventType type)
+{
+	std::unique_lock<std::mutex>	lock(_devicesubmutex);
+
+	this->_deviceSubsribers.insert(std::make_pair(std::make_pair(type, nullptr), sub));
+}
+
+void BoxAPI::Event::EventDispatcher::addSubscriber(DeviceSubscriber &sub, DeviceEventType type, std::shared_ptr<Device> device)
+{
+	std::unique_lock<std::mutex>	lock(_devicesubmutex);
+
+	this->_deviceSubsribers.insert(std::make_pair(std::make_pair(type, device), sub));
+}
+
+void BoxAPI::Event::EventDispatcher::addSubscriber(CommandSubscriber & sub)
+{
+	std::unique_lock<std::mutex>	lock(_commandsubmutex);
+
+	this->_commandSubsribers.insert(std::make_pair(std::make_pair(AllCommandEvent, nullptr), sub));
+}
+
+void BoxAPI::Event::EventDispatcher::addSubscriber(CommandSubscriber &sub, CommandEventType type)
+{
+	std::unique_lock<std::mutex>	lock(_commandsubmutex);
+
+	this->_commandSubsribers.insert(std::make_pair(std::make_pair(type, nullptr), sub));
+}
+
+void BoxAPI::Event::EventDispatcher::addSubscriber(CommandSubscriber &sub, CommandEventType type, std::shared_ptr<ICommand> command)
+{
+	std::unique_lock<std::mutex>	lock(_commandsubmutex);
+
+	this->_commandSubsribers.insert(std::make_pair(std::make_pair(type, command), sub));
+}
+
+void BoxAPI::Event::EventDispatcher::dispatchEvent(DeviceEventData &data)
+{
+	std::unique_lock<std::mutex>	lock(_deviceeventmutex);
+
+	_deviceEvents.push(data);
+	lock.unlock();
+	_deviceeventcv.notify_one();
+}
+
+void BoxAPI::Event::EventDispatcher::dispatchEvent(CommandEventData &data)
+{
+	std::unique_lock<std::mutex>	lock(_commandeventmutex);
+
+	_commandEvents.push(data);
+	lock.unlock();
+	_commandeventcv.notify_one();
+}
+
+void BoxAPI::Event::EventDispatcher::processDevice()
+{
+	DeviceEventData					data;
+
+	while (true)
+	{
+		{
+			std::unique_lock<std::mutex> lock(_deviceeventmutex);
+			while ((!_started || _deviceEvents.empty()) && !_destructed)
+				_deviceeventcv.wait(lock);
+			if (_destructed)
+				return;
+			data = _deviceEvents.front();
+			_deviceEvents.pop();
+		}
+		{
+			std::unique_lock<std::mutex> lock(_devicesubmutex);
+			
+			for (std::multimap<std::pair<DeviceEventType, std::shared_ptr<Device>>, DeviceSubscriber>::iterator it = _deviceSubsribers.begin(); it != _deviceSubsribers.end(); ++it)
+				if ((it->first.first == 0 || it->first.first == data.type) && (it->first.second == nullptr || it->first.second == data.device))
+					it->second(data);
+		}
+	}
+}
+
+void BoxAPI::Event::EventDispatcher::processCommand()
+{
+	CommandEventData					data;
+
+	while (true)
+	{
+		{
+			std::unique_lock<std::mutex> lock(_commandeventmutex);
+			while ((!_started || _commandEvents.empty()) && !_destructed)
+				_commandeventcv.wait(lock);
+			if (_destructed)
+				return;
+			data = _commandEvents.front();
+			_commandEvents.pop();
+		}
+		{
+			std::unique_lock<std::mutex> lock(_commandsubmutex);
+			
+			for (std::multimap<std::pair<CommandEventType, std::shared_ptr<ICommand>>, CommandSubscriber>::iterator it = _commandSubsribers.begin(); it != _commandSubsribers.end(); ++it)
+				if ((it->first.first == 0 || it->first.first == data.type) && (it->first.second == nullptr || it->first.second == data.command))
+					it->second(data);
+		}
+	}
+}

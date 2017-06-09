@@ -1,0 +1,86 @@
+#ifndef EVENT_H_
+# define EVENT_H_
+
+#include "ICommand.h"
+
+namespace BoxAPI
+{
+	namespace Event
+	{
+
+		enum DeviceEventType
+		{
+			AllDeviceEvent = -1,
+			NewDevice = 0,
+			RemoveDevice = 1
+		};
+
+		struct DeviceEventData
+		{
+			DeviceEventType					type;
+			std::shared_ptr<BoxAPI::Device>	device;
+		};
+
+		typedef std::function<void(DeviceEventData&)>	DeviceEventHandler;
+		typedef std::function<bool(DeviceEventData&)>	DeviceConditionHandler;
+
+		class DeviceSubscriber {
+		public:
+			DeviceSubscriber(DeviceEventHandler ehandler = nullptr, DeviceConditionHandler chandler = nullptr);
+			DeviceSubscriber& operator=(const DeviceSubscriber&);
+			DeviceSubscriber(const DeviceSubscriber&);
+
+			void	operator()(DeviceEventData&);
+
+			void	setAction(DeviceEventHandler handler);
+			void	setCondition(DeviceConditionHandler handler);
+
+		private:
+			bool	defaultCondition(DeviceEventData&);
+			void	defaultAction(DeviceEventData&);
+
+			DeviceEventHandler		_method;
+			DeviceConditionHandler	_condition;
+
+		};
+
+		enum CommandEventType
+		{
+			AllCommandEvent = -1,
+			NewCommand = 0,
+			RemoveCommand = 1,
+			Update = 2
+		};
+
+		struct CommandEventData
+		{
+			CommandEventType					type;
+			std::shared_ptr<BoxAPI::ICommand>	command;
+		};
+
+		typedef std::function<void(CommandEventData&)>	CommandEventHandler;
+		typedef std::function<bool(CommandEventData&)>	CommandConditionHandler;
+
+		class CommandSubscriber {
+		public:
+			CommandSubscriber(CommandEventHandler ehandler = nullptr, CommandConditionHandler chandler = nullptr);
+			CommandSubscriber& operator=(const CommandSubscriber&);
+			CommandSubscriber(const CommandSubscriber&);
+
+			void	operator()(CommandEventData&);
+
+			void	setAction(CommandEventHandler handler);
+			void	setCondition(CommandConditionHandler handler);
+
+		private:
+			bool	defaultCondition(CommandEventData&);
+			void	defaultAction(CommandEventData &);
+
+			CommandEventHandler		_method;
+			CommandConditionHandler	_condition;
+
+		};
+	}
+}
+
+#endif /* !EVENT_H_ */

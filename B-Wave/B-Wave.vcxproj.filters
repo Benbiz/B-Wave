@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Fichiers de ressources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Fichiers sources\Controller">
+      <UniqueIdentifier>{53e60f40-8bd8-40ae-8971-b9cd039f8214}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Controller">
+      <UniqueIdentifier>{7ebb59ab-9a54-40b6-8e3c-08b2e9b433d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Controller\Command">
+      <UniqueIdentifier>{3d9fc97b-9a21-4079-9c98-5e7d7498c9d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Controller\Command">
+      <UniqueIdentifier>{386154e9-33f8-4ee3-a511-f73941652667}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\socket.io">
+      <UniqueIdentifier>{1e145363-6ed0-4060-b257-d1550b493de7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Network">
+      <UniqueIdentifier>{4720f4b9-f435-4288-bd9c-f9e5655da8c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Network">
+      <UniqueIdentifier>{eddbdde5-92d7-4b19-8371-32f94b7fb9f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Scenario">
+      <UniqueIdentifier>{5d6d9687-b242-4acc-a9ad-a7a9486583b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Scenario">
+      <UniqueIdentifier>{cf52c2b2-4d95-497b-bb28-b3eb8ef03332}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Event">
+      <UniqueIdentifier>{300b63bb-e532-48f6-ac2f-28dd2713f2e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Event">
+      <UniqueIdentifier>{da5793aa-d4ae-4305-876f-312f4e6753d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Network\MessageHandlers">
+      <UniqueIdentifier>{b098106b-b069-44bc-9d19-50340c442656}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Network\MessageHandlers">
+      <UniqueIdentifier>{5ed4d850-ca85-4e6c-bf14-a5bf31e8dd95}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BWave.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="ICommand.h">
+      <Filter>Fichiers d%27en-tête\Controller\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Fichiers d%27en-tête\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="ZSwitchBinary.h">
+      <Filter>Fichiers d%27en-tête\Controller\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="ZSensorMultiLevel.h">
+      <Filter>Fichiers d%27en-tête\Controller\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Fichiers d%27en-tête\Controller\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="ZCallback.h">
+      <Filter>Fichiers d%27en-tête\Controller\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="ZSensorBinary.h">
+      <Filter>Fichiers d%27en-tête\Controller\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>Fichiers d%27en-tête\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Connection.h">
+      <Filter>Fichiers d%27en-tête\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenario.h">
+      <Filter>Fichiers d%27en-tête\Scenario</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenarioMotor.h">
+      <Filter>Fichiers d%27en-tête\Scenario</Filter>
+    </ClInclude>
+    <ClInclude Include="Subscriber.hpp">
+      <Filter>Fichiers d%27en-tête\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Dispatcher.h">
+      <Filter>Fichiers d%27en-tête\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="EventDispatcher.hpp">
+      <Filter>Fichiers d%27en-tête\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="EventDispatcher.h.old">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerEvent.h">
+      <Filter>Fichiers d%27en-tête\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h.old">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="ZSwitchMultiLevel.h">
+      <Filter>Fichiers d%27en-tête\Controller\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="ZSwitchColor.h">
+      <Filter>Fichiers d%27en-tête\Controller\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceRecord.h">
+      <Filter>Fichiers d%27en-tête\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandHandler.h">
+      <Filter>Fichiers d%27en-tête\Network\MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleListHandler.h">
+      <Filter>Fichiers d%27en-tête\Network\MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageHandler.h">
+      <Filter>Fichiers d%27en-tête\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenarioHandler.h">
+      <Filter>Fichiers d%27en-tête\Network\MessageHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerHandler.h">
+      <Filter>Fichiers d%27en-tête\Network\MessageHandlers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Fichiers sources\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>Fichiers sources\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="ZSwitchBinary.cpp">
+      <Filter>Fichiers sources\Controller\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="ZSensorMultiLevel.cpp">
+      <Filter>Fichiers sources\Controller\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="ZCallback.cpp">
+      <Filter>Fichiers sources\Controller\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="ZSensorBinary.cpp">
+      <Filter>Fichiers sources\Controller\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="BWave.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="socket.io\src\sio_client.cpp">
+      <Filter>Fichiers sources\socket.io</Filter>
+    </ClCompile>
+    <ClCompile Include="socket.io\src\sio_socket.cpp">
+      <Filter>Fichiers sources\socket.io</Filter>
+    </ClCompile>
+    <ClCompile Include="socket.io\src\internal\sio_client_impl.cpp">
+      <Filter>Fichiers sources\socket.io</Filter>
+    </ClCompile>
+    <ClCompile Include="socket.io\src\internal\sio_packet.cpp">
+      <Filter>Fichiers sources\socket.io</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageHandler.cpp">
+      <Filter>Fichiers sources\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Connection.cpp">
+      <Filter>Fichiers sources\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenario.cpp">
+      <Filter>Fichiers sources\Scenario</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenarioMotor.cpp">
+      <Filter>Fichiers sources\Scenario</Filter>
+    </ClCompile>
+    <ClCompile Include="EventDispatcher.cpp.old">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Dispatcher.cpp">
+      <Filter>Fichiers sources\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerEvent.cpp">
+      <Filter>Fichiers sources\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ZSwitchMultiLevel.cpp">
+      <Filter>Fichiers sources\Controller\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="ZSwitchColor.cpp">
+      <Filter>Fichiers sources\Controller\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceRecord.cpp">
+      <Filter>Fichiers sources\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="ScenarioHandler.cpp">
+      <Filter>Fichiers sources\Network\MessageHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandHandler.cpp">
+      <Filter>Fichiers sources\Network\MessageHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleListHandler.cpp">
+      <Filter>Fichiers sources\Network\MessageHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerHandler.cpp">
+      <Filter>Fichiers sources\Network\MessageHandlers</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
+</Project>

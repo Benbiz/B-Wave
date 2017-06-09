@@ -1,0 +1,6 @@
+[submodule "B-Wave/socket.io"]
+	path = B-Wave/socket.io
+	url = https://github.com/socketio/socket.io-client-cpp.git
+[submodule "B-Wave/jsoncpp"]
+	path = B-Wave/jsoncpp
+	url = https://github.com/open-source-parsers/jsoncpp.git

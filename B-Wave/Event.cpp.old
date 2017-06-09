@@ -1,0 +1,112 @@
+#include "stdafx.h"
+#include "Event.h"
+
+/*
+** Device Subscriber
+*/
+
+BoxAPI::Event::DeviceSubscriber::DeviceSubscriber(DeviceEventHandler ehandler, DeviceConditionHandler chandler)
+	: _method(ehandler), _condition(chandler)
+{
+}
+
+BoxAPI::Event::DeviceSubscriber &BoxAPI::Event::DeviceSubscriber::operator=(const DeviceSubscriber &s)
+{
+	this->_method = s._method;
+	this->_condition = s._condition;
+}
+
+BoxAPI::Event::DeviceSubscriber::DeviceSubscriber(const DeviceSubscriber &s)
+	: _method(s._method), _condition(s._condition)
+{
+}
+
+void BoxAPI::Event::DeviceSubscriber::operator()(DeviceEventData &d)
+{
+	if (!_condition)
+	{
+		if (!defaultCondition(d))
+			return;
+	}
+	else if (!_condition(d))
+		return;
+	if (!_method)
+		defaultAction(d);
+	else
+		_method(d);
+}
+
+void BoxAPI::Event::DeviceSubscriber::setAction(DeviceEventHandler handler)
+{
+	_method = handler;
+}
+
+void BoxAPI::Event::DeviceSubscriber::setCondition(DeviceConditionHandler handler)
+{
+	_condition = handler;
+}
+
+bool BoxAPI::Event::DeviceSubscriber::defaultCondition(DeviceEventData &d)
+{
+	return true;
+}
+
+void BoxAPI::Event::DeviceSubscriber::defaultAction(DeviceEventData &d)
+{
+
+}
+
+/*
+** Command Subscriber
+*/
+
+BoxAPI::Event::CommandSubscriber::CommandSubscriber(CommandEventHandler ehandler, CommandConditionHandler chandler)
+	: _method(ehandler), _condition(chandler)
+{
+}
+
+BoxAPI::Event::CommandSubscriber &BoxAPI::Event::CommandSubscriber::operator=(const CommandSubscriber &s)
+{
+	this->_method = s._method;
+	this->_condition = s._condition;
+}
+
+BoxAPI::Event::CommandSubscriber::CommandSubscriber(const CommandSubscriber &s)
+	: _method(s._method), _condition(s._condition)
+{
+}
+
+void BoxAPI::Event::CommandSubscriber::operator()(CommandEventData &d)
+{
+	if (!_condition)
+	{
+		if (!defaultCondition(d))
+			return;
+	}
+	else if (!_condition(d))
+		return;
+	if (!_method)
+		defaultAction(d);
+	else
+		_method(d);
+}
+
+void BoxAPI::Event::CommandSubscriber::setAction(CommandEventHandler handler)
+{
+	_method = handler;
+}
+
+void BoxAPI::Event::CommandSubscriber::setCondition(CommandConditionHandler handler)
+{
+	_condition = handler;
+}
+
+bool BoxAPI::Event::CommandSubscriber::defaultCondition(CommandEventData &d)
+{
+	return true;
+}
+
+void BoxAPI::Event::CommandSubscriber::defaultAction(CommandEventData &d)
+{
+
+}
